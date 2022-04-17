@@ -5,6 +5,8 @@ import * as fs from "fs";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import createDirectoryContents from "./createDirectoryContents.js";
+import chalk from "chalk";
+import figlet from "figlet";
 const CURR_DIR = process.cwd();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -28,6 +30,10 @@ const QUESTIONS = [
     },
   },
 ];
+
+console.log(
+  chalk.yellow(figlet.textSync("Create Todo", { horizontalLayout: "full" }))
+);
 
 inquirer.prompt(QUESTIONS).then((answers) => {
   const projectChoice = answers["project-choice"];
