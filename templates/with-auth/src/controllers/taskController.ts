@@ -50,6 +50,30 @@ export const createTask = async (req: Request, res: Response) => {
   });
 };
 
-export const updateTask = (req: Request, res: Response) => {};
+export const updateTask = async (req: Request, res: Response) => {
+  const currUser = await getCurrentUser(req);
+
+  if (!currUser) {
+    return res.status(400).send({
+      message: "User not found",
+    });
+  }
+
+  const task = await Task.findOne({ _id: req.params.id, user: currUser._id });
+
+  if (!task) {
+    return res.status(400).send({
+      message: "Task not found",
+    });
+  }
+
+  task.set({ ...req.body });
+
+  await task.save();
+
+  return res.status(200).send({
+    message: "Task updated successfully",
+  });
+};
 
 export const deleteTask = (req: Request, res: Response) => {};
