@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express, { Express } from "express";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 import authRouter from "./routes/authRoute";
 import taskRouter from "./routes/taskRoute";
@@ -8,6 +9,7 @@ import taskRouter from "./routes/taskRoute";
 (async () => {
   const app: Express = express();
 
+  app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 

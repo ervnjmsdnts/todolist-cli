@@ -19,6 +19,7 @@ const taskSchema = new Schema(
     },
     completed: {
       type: Boolean,
+      default: false,
       required: true,
     },
     owner: {
@@ -32,4 +33,4 @@ const taskSchema = new Schema(
   }
 );
 
-export const Task: Model<ITask> = model("Task", taskSchema);
+export const Task: Model<ITask> = model<ITask>("Task", taskSchema);
