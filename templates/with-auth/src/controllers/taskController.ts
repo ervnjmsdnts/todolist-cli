@@ -16,7 +16,25 @@ export const getAllTask = async (req: Request, res: Response) => {
   return res.status(200).send(tasks);
 };
 
-export const getTask = (req: Request, res: Response) => {};
+export const getTask = async (req: Request, res: Response) => {
+  const currUser = await getCurrentUser(req);
+
+  if (!currUser) {
+    return res.status(400).send({
+      message: "User not found",
+    });
+  }
+
+  const task = await Task.findOne({ _id: req.params.id, user: currUser._id });
+
+  if (!task) {
+    return res.status(400).send({
+      message: "Task not found",
+    });
+  }
+
+  return res.status(200).send(task);
+};
 
 export const createTask = async (req: Request, res: Response) => {
   const currUser = await getCurrentUser(req);
