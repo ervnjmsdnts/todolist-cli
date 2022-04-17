@@ -11,7 +11,7 @@ export const getAllTask = async (req: Request, res: Response) => {
     });
   }
 
-  const tasks = await Task.find({ user: currUser._id });
+  const tasks = await Task.find({ owner: currUser?._id });
 
   return res.status(200).send(tasks);
 };
@@ -25,7 +25,7 @@ export const getTask = async (req: Request, res: Response) => {
     });
   }
 
-  const task = await Task.findOne({ _id: req.params.id, user: currUser._id });
+  const task = await Task.findOne({ _id: req.params.id, owner: currUser._id });
 
   if (!task) {
     return res.status(400).send({
@@ -59,7 +59,7 @@ export const updateTask = async (req: Request, res: Response) => {
     });
   }
 
-  const task = await Task.findOne({ _id: req.params.id, user: currUser._id });
+  const task = await Task.findOne({ _id: req.params.id, owner: currUser._id });
 
   if (!task) {
     return res.status(400).send({
@@ -85,7 +85,7 @@ export const deleteTask = async (req: Request, res: Response) => {
     });
   }
 
-  const task = await Task.findOne({ _id: req.params.id, user: currUser._id });
+  const task = await Task.findOne({ _id: req.params.id, owner: currUser._id });
 
   if (!task) {
     return res.status(400).send({
